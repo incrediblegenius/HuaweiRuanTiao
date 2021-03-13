@@ -1,6 +1,6 @@
 from operator import attrgetter
 
-class Sever():
+class Server():
     def __init__(self,name ,cores ,mems, hard_cost, energy_cost):
         self.name =name 
         self.cores = cores 
@@ -23,6 +23,16 @@ class Sever():
     def __str__(self) -> str:
         return "SeverName:{}, cores:{}, mems:{}, hc:{}, ec:{}".format(self.name,self.cores,self.mems,self.hard_cost,self.energy_cost)
 
+class VM():
+    def __init__(self,name,cores,mems,binode) -> None:
+        self.name = name
+        self.cores = cores
+        self.mems = mems
+        self.is_binode = binode
+        
+    def __str__(self) -> str:
+        return "VMname: {}, cores: {}, mems:{}, is_binode:{}".format(self.name,self.cores,self.mems,self.is_binode)
+    
 
 if __name__ =='__main__':
     A = []
@@ -31,9 +41,9 @@ if __name__ =='__main__':
         print(lines)
         severs = f.readlines()
         for i in range(int(lines)):
-            sever = severs[i][1:-2].split(', ')
-            print(sever)
-            A.append(Sever(sever[0],int(sever[1]),int(sever[2]),int(sever[3]),int(sever[4])))
+            server = severs[i][1:-2].split(', ')
+            print(server)
+            A.append(Server(server[0],int(server[1]),int(server[2]),int(server[3]),int(server[4])))
 
     A.sort(key=attrgetter('cores','mems','hard_cost','energy_cost'))
 
