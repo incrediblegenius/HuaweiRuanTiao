@@ -83,7 +83,15 @@ class Manager():
                 if cnt == length:
                     break
         return ret
-        
+    
+    def get_day_ops(self,day:int): ######start with 0
+        return self.ops[day]
+
+    def get_all_ops(self):
+        return self.ops
+
+    def get_days(self)->int:
+        return self.days
 
     def find_server_by_ec_list(self,cores:int,mems:int,length:int) :
         if self.sortflag != 'ec':
