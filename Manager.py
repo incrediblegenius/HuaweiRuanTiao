@@ -8,20 +8,36 @@ class Manager():
         self.sortflag = ''
         self.vm_list = []
         self.vm_count = 0
-        with open('./training-1.txt','r') as f:
+        with open(filepath,'r') as f:
             lines = f.readlines()
             serverline = int(lines[0])
             vmlines = int(lines[serverline+1])
+            readline = 1
             for i in range(serverline):
-                server = lines[i+1][1:-2].split(', ')    
+                server = lines[readline][1:-2].split(', ')    
                 self.server_list.append(Server(server[0],int(server[1]),int(server[2]),int(server[3]),int(server[4])))
                 self.server_count += 1
+                readline += 1
                 self.sortflag = ''
+            readline += 1
             for i in range(vmlines):
-                vm = lines[i+serverline+2][1:-2].split(', ')
+                vm = lines[readline][1:-2].split(', ')
                 self.vm_list.append(VM(vm[0],int(vm[1]),int(vm[2]),int(vm[3])))
                 self.vm_count += 1
-
+                readline += 1
+            self.days = int(lines[readline])
+            self.ops =[]
+            readline += 1
+            for i in range(self.days):
+                day =[]
+                ops_num = int(lines[readline])
+                readline += 1
+                for j in range(ops_num):
+                    day.append(lines[readline][1:-2].split(', '))
+                    readline += 1
+                self.ops.append(day)
+        # print(self.days)
+        # print(self.ops[0])
 
     # def addServer(self,server:Server):
     #     self.server_list.append(server)
@@ -89,5 +105,8 @@ class Manager():
 if __name__ =='__main__':
     manager = Manager('./training-1.txt')
     a = manager.find_vm_by_name('vmSQCQ3')
+    b = manager.find_server_by_hc_list(200,200,5)
     print(a)
+    for i in b:
+        print(i)
     print(manager)
