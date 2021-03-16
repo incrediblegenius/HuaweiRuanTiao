@@ -1,4 +1,3 @@
-from os import linesep
 from Server import Server,VM
 from operator import attrgetter
 class Manager():

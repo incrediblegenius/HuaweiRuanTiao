@@ -5,9 +5,10 @@ class RunningVM():
         self.name = vm.name
         self.cores = vm.cores
         self.mems = vm.mems
+        self.isbinode = vm.is_binode
         self.id = id
-        self.running_server = 0   ##server id
-        self.running_node = 0    ##node 1:singleA  2:singleB  3:binoode
+        self.running_server = ''  ##server id
+        self.running_node = ''    ##node 'A':singleA  'B':singleB  'AB':binoode
 
     def setrunningloc(self,serverid,node):
         self.running_server = serverid
@@ -20,32 +21,38 @@ class RunningServer():
         self.mems = server.mems
         self.id = id
         self.ec = server.energy_cost
-        self.runningatA = 0
-        self.runningatB = 0
+        self.runningatA = ''
+        self.runningatB = ''
     @property
     def Ais_empty(self):
-        return ~self.runningatA
+        if self.runningatA == '':
+            return 1
+        else:
+            return 0
 
     @property
     def Bis_empty(self):
-        return ~self.runningatB
+        if self.runningatB == '':
+            return 1
+        else:
+            return 0
     
     
-    def setrunningnode(self,nodeid,vmid):
-        if nodeid ==1:
+    def setrunningnode(self,vmid,nodeid):
+        if nodeid =='A':
             self.runningatA = vmid
-        elif nodeid ==2:
+        elif nodeid =='B':
             self.runningatB = vmid
         else:
             self.runningatA =vmid
             self.runningatB =vmid
     
     def delrunningnode(self,nodeid):
-        if nodeid ==1:
-            self.runningatA = 0
-        elif nodeid ==2:
-            self.runningatB = 0
+        if nodeid =='A':
+            self.runningatA = ''
+        elif nodeid =='B':
+            self.runningatB = ''
         else:
-            self.runningatA =0
-            self.runningatB =0
+            self.runningatA =''
+            self.runningatB =''
     
