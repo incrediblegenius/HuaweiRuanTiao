@@ -10,7 +10,7 @@ class Manager():
         self.vm_count = 0
         
         lines = sys.stdin.readline()
-        print(lines,type(lines))
+        # print(lines,type(lines))
         serverline = int(lines)
         # vmlines = int(lines[serverline+1])
         for i in range(serverline):
