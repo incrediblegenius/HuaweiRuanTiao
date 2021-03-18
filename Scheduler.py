@@ -65,23 +65,24 @@ class Scheduler():
         for i in range(self.running_server_cnt-1,-1,-1):
             if self.running_server[i].id == serverid :
                 return i
-
+ 
     def find_free_server_by_id(self,serverid):
         for i in range(self.free_server_cnt-1,-1,-1):
             if self.free_server[i].id == serverid :
                 return i
 
-    def add_svm_to_running_server(self,vmid,serverid):
+    def add_svm_to_running_server(self,vmid,ruuningloc):
         i = self.find_vm_by_id(vmid)
-        j = self.find_running_server_by_id(serverid)
-        if self.running_server[j].Ais_empty :
+        serverid = self.running_server[ruuningloc].id
+        # j = self.find_running_server_by_id(serverid)
+        if self.running_server[ruuningloc].Ais_empty :
             node = 'A'
-        elif self.running_server[j].Bis_empty :
+        elif self.running_server[ruuningloc].Bis_empty :
             node = 'B' 
         else:
             return False
         self.running_vm[i].setrunningloc(serverid,node)
-        self.running_server[j].setrunningnode(vmid,node)
+        self.running_server[ruuningloc].setrunningnode(vmid,node)
         bushu.append("{}:{}".format(serverid,node))
         return True
 
@@ -147,7 +148,7 @@ class Scheduler():
         runningloc = self.find_server_from_running_server(vm.cores,vm.mems)
         if runningloc>=0:
             serverid = self.running_server[runningloc].id
-            self.add_svm_to_running_server(vm.id,serverid)
+            self.add_svm_to_running_server(vm.id,runningloc)
             return 
         freeloc = self.find_server_from_free_server(vm.cores,vm.mems)
         if freeloc>=0:
